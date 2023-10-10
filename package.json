@@ -24,15 +24,16 @@
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {
-    "react": "^16.8.1",
-    "react-native": ">=0.60.0"
+    "react": "18.2.0",
+    "react-native": "0.72.3"
   },
   "devDependencies": {
-    "@types/prop-types": "^15.7.3",
-    "@types/react": "18.2.0",
+    "@types/prop-types": "15.7.8",
+    "@types/react": "18.2.14",
     "react": "18.2.0",
-    "react-native": "^0.60.0",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.6.4"
-  }
+    "react-native": "0.72.3",
+    "rimraf": "5.0.5",
+    "typescript": "5.0.4"
+  },
+  "packageManager": "yarn@3.6.4"
 }
