@@ -2,7 +2,7 @@
 #import "RNUnityView.h"
 
 // TODO FIXME
-#include "../../../../../../../modules/roli_studio_engine/Misc/UnityBridge.h"
+#include "../../../../../../../modules/roli_unity_bridge/src/UnityBridge.h"
 
 @implementation RNUnityViewManager
 
