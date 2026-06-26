@@ -7,6 +7,8 @@ import android.os.Build;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import com.unity3d.player.UnityPlayer;
+import com.unity3d.player.UnityPlayerForActivityOrService;
+
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -48,7 +50,7 @@ public class UnityUtils {
                     fullScreen = true;
                 }
 
-                unityPlayer = new UnityPlayer(activity);
+                unityPlayer = new UnityPlayerForActivityOrService(activity);
 
                 try {
                     // wait a moument. fix unity cannot start when startup.
@@ -59,8 +61,8 @@ public class UnityUtils {
                 // start unity
                 addUnityViewToBackground();
                 unityPlayer.windowFocusChanged(true);
-                unityPlayer.requestFocus();
-                unityPlayer.resume();
+                unityPlayer.getFrameLayout().requestFocus();
+                unityPlayer.onResume();
 
                 // restore window layout
                 if (!fullScreen) {
@@ -82,14 +84,14 @@ public class UnityUtils {
 
     public static void pause() {
         if (unityPlayer != null) {
-            unityPlayer.pause();
+            unityPlayer.onPause();
             _isUnityPaused = true;
         }
     }
 
     public static void resume() {
         if (unityPlayer != null) {
-            unityPlayer.resume();
+            unityPlayer.onResume();
             _isUnityPaused = false;
         }
     }
@@ -118,29 +120,29 @@ public class UnityUtils {
         if (unityPlayer == null) {
             return;
         }
-        if (unityPlayer.getParent() != null) {
-            ((ViewGroup) unityPlayer.getParent()).removeView(unityPlayer);
+        if (unityPlayer.getFrameLayout().getParent() != null) {
+            ((ViewGroup) unityPlayer.getFrameLayout().getParent()).removeView(unityPlayer.getFrameLayout());
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            unityPlayer.setZ(-1f);
+            unityPlayer.getFrameLayout().setZ(-1f);
         }
         final Activity activity = ((Activity) unityPlayer.getContext());
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(1, 1);
-        activity.addContentView(unityPlayer, layoutParams);
+        activity.addContentView(unityPlayer.getFrameLayout(), layoutParams);
     }
 
     public static void addUnityViewToGroup(ViewGroup group) {
         if (unityPlayer == null) {
             return;
         }
-        if (unityPlayer.getParent() != null) {
-            ((ViewGroup) unityPlayer.getParent()).removeView(unityPlayer);
+        if (unityPlayer.getFrameLayout().getParent() != null) {
+            ((ViewGroup) unityPlayer.getFrameLayout().getParent()).removeView(unityPlayer.getFrameLayout());
         }
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-        group.addView(unityPlayer, 0, layoutParams);
+        group.addView(unityPlayer.getFrameLayout(), 0, layoutParams);
         unityPlayer.windowFocusChanged(true);
-        unityPlayer.requestFocus();
-        unityPlayer.resume();
+        unityPlayer.getFrameLayout().requestFocus();
+        unityPlayer.onResume();
     }
 
     public interface CreateCallback {
