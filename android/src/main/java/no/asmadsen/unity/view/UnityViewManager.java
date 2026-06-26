@@ -53,7 +53,7 @@ public class UnityViewManager extends SimpleViewManager<UnityView>
     @Override
     public void onHostResume() {
         if (UnityUtils.isUnityReady()) {
-            UnityUtils.getPlayer().resume();
+            UnityUtils.getPlayer().onResume();
             restoreUnityUserState();
         }
     }
@@ -62,14 +62,14 @@ public class UnityViewManager extends SimpleViewManager<UnityView>
     public void onHostPause() {
         if (UnityUtils.isUnityReady()) {
             // Don't use UnityUtils.pause()
-            UnityUtils.getPlayer().pause();
+            UnityUtils.getPlayer().onPause();
         }
     }
 
     @Override
     public void onHostDestroy() {
         if (UnityUtils.isUnityReady()) {
-            UnityUtils.getPlayer().quit();
+            UnityUtils.getPlayer().onStop();
         }
     }
 
@@ -81,7 +81,7 @@ public class UnityViewManager extends SimpleViewManager<UnityView>
                 @Override
                 public void run() {
                     if (UnityUtils.getPlayer() != null) {
-                        UnityUtils.getPlayer().pause();
+                        UnityUtils.getPlayer().onPause();
                     }
                 }
             }, 300); //TODO: 300 is the right one?
